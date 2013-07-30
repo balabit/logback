@@ -1,0 +1,5 @@
+These files are used by the unit tests of TLSSyslogAppender and its helper and utility classess.
+
+The logback-ca-crt.pem file contains a root CA certificate. This certificate is imported into the truststore.jks and client-keystore.jks, too.
+
+The client-keystore.jks file consists of a private key, a root CA certificate and the imported client-crt.pem file. The latter is signed by the root CA.

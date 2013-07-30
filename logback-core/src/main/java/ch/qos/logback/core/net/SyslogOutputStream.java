@@ -46,6 +46,10 @@ public class SyslogOutputStream extends OutputStream {
     this.ds = new DatagramSocket();
   }
 
+  protected SyslogOutputStream() {
+      this.port = -1;
+  }
+
   public void write(byte[] byteArray, int offset, int len) throws IOException {
     baos.write(byteArray, offset, len);
   }

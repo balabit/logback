@@ -22,6 +22,9 @@ import ch.qos.logback.core.AppenderBase;
 import ch.qos.logback.core.CoreConstants;
 import ch.qos.logback.core.Layout;
 
+import javax.net.SocketFactory;
+import javax.net.ssl.SSLSocketFactory;
+
 /**
  * Base class for SyslogAppender.
  * 
@@ -48,9 +51,8 @@ public abstract class SyslogAppenderBase<E> extends AppenderBase<E> {
       addError("The Facility option is mandatory");
       errorCount++;
     }
-
     try {
-      sos = new SyslogOutputStream(syslogHost, port);
+      sos = createOutputStream();
     } catch (UnknownHostException e) {
       addError("Could not create SyslogWriter", e);
       errorCount++;
@@ -68,6 +70,8 @@ public abstract class SyslogAppenderBase<E> extends AppenderBase<E> {
       super.start();
     }
   }
+
+    public abstract SyslogOutputStream createOutputStream() throws SocketException, UnknownHostException;
 
   abstract public Layout<E> buildLayout();
 

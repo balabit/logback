@@ -36,13 +36,14 @@ import ch.qos.logback.core.util.StatusPrinter;
 public class SyslogAppenderTest {
 
   LoggerContext lc = new LoggerContext();
-  SyslogAppender sa = new SyslogAppender();
+  SyslogAppender sa;
   MockSyslogServer mockServer;
   String loggerName = this.getClass().getName();
   Logger logger = lc.getLogger(loggerName);
 
   @Before
   public void setUp() throws Exception {
+    sa = createSyslogAppender();
     lc.setName("test");
     sa.setContext(lc);
   }
@@ -53,9 +54,9 @@ public class SyslogAppenderTest {
 
   public void setMockServerAndConfigure(int expectedCount, String suffixPattern)
       throws InterruptedException {
-    int port = RandomUtil.getRandomServerPort();
+    int port = generateServerPort();
 
-    mockServer = new MockSyslogServer(expectedCount, port);
+    mockServer = createMockServer(expectedCount, port);
     mockServer.start();
     // give MockSyslogServer head start
 
@@ -78,6 +79,18 @@ public class SyslogAppenderTest {
   public void setMockServerAndConfigure(int expectedCount)
 	      throws InterruptedException {
 	 this.setMockServerAndConfigure(expectedCount, "[%thread] %logger %msg");   
+  }
+
+  public int generateServerPort() {
+      return RandomUtil.getRandomServerPort();
+  }
+
+  public SyslogAppender createSyslogAppender() {
+      return new SyslogAppender();
+  }
+
+  public MockSyslogServer createMockServer(int expectedCount, int port) {
+     return new MockSyslogServer(expectedCount, port);
   }
 
   @Test

@@ -21,6 +21,7 @@ package ch.qos.logback.core.net;
 public class SyslogConstants {
   
   static public final int SYSLOG_PORT = 514;
+  public static final int TLS_SYSLOG_PORT = 6514;
   
   
   // Following constants extracted from RFC 3164, we multiply them by 8
